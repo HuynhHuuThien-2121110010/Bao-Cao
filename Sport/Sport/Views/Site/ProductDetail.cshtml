@@ -1,0 +1,30 @@
+﻿@model MyClass.Models.Product
+@{
+    ViewBag.Title = "Chi Tiết";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+
+<section class="maincontent clearfix">
+    <div class="container my-3">
+        <div class="row product-info">
+            <div class="col-md-5">
+                <img src="~/Public/images/products/@Model.Img" class="img-fluid card-img-top" alt="...">
+            </div>
+            <div class="col-md-7 px-5">
+                <h1 class="product-title">@Model.Name</h1>
+                <h5>
+                    Giá:<strong class="text-danger">@string.Format("{0:N0} đ", Model.Price)</strong>
+                    @*<del><span class="text-danger">290.000</span></del><sup>đ</sup>*@
+                </h5>
+            </div>
+        </div>
+        <div class="row product-detail">
+            <h3>Chi tiết sản phẩm</h3>
+            <p>@Html.Raw(Model.Detail)</p>
+        </div>
+        <div class="row product-detail">
+            <h3>Sản phẩm cùng loại</h3>
+        </div>
+    </div>
+</section>
+

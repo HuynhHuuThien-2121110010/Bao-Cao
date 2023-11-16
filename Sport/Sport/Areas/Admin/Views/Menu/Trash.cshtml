@@ -1,0 +1,95 @@
+﻿@model IEnumerable<MyClass.Models.Menu>
+
+@{
+    ViewBag.Title = "Trash";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header{
+
+    <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+
+    <script src="~/Public/js/cdn.datatables.net_1.13.6_js_jquery.dataTables.min.js"></script>
+    <script>
+    let table = new DataTable('#myTable');
+    </script>
+}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content my-3">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong class="text-danger text-uppercase">Thùng rác danh mục</strong>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="@Url.Action("Index","Menu")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-2">
+                @Html.Partial("Message")
+                @*@if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success" id="successMessage">
+                            @TempData["SuccessMessage"]
+                        </div>
+
+                    }*@
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Tên Menu</th>
+                            <th>Liên Kết</th>
+                            <th>Kiểu Menu</th>
+                            <th>Vị trí</th>
+                            <th>Chức năng</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Link</td>
+                                <td>@item.Type</td>
+                                <td>@item.Position</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("ReTrash","Menu", new { id = item.Id })" class="btn btn-sm btn-info"><i class="fas fa-undo"></i></a>
+                                    <a href="@Url.Action("Delete","Menu", new { id = item.Id })" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    @item.Id
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var msg = document.getElementById('successMessage');
+            if (msg) {
+                msg.style.display = 'none';
+            }
+        }, 3000); // 5 giây
+    }
+</script>

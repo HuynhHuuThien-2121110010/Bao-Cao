@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Map";
+}
+<iframe width="350"
+        height="350"
+        frameborder="0"
+        style="border:0"
+        src="https://www.google.com/maps?q=103+Đường+Tăng+Nhơn+Phú,+Phước+Long+B,+Quận+9,+Thành+phố+Hồ+Chí+Minh,+Việt+Nam&output=embed"
+        allowfullscreen></iframe>
+<div id="map" style="width: 100%; height: 400px;"></div>
+@section scripts {
+    <script>
+        function initMap() {
+            // Lấy vị trí hiện tại của người dùng
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latLng = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Tạo đối tượng Map
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: latLng,
+                        zoom: 15
+                    });
+
+                    // Đánh dấu vị trí hiện tại trên bản đồ
+                    new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: "Vị trí của tôi"
+                    });
+                }, function () {
+                    alert('Không thể lấy vị trí của bạn.');
+                });
+            } else {
+                alert('Trình duyệt của bạn không hỗ trợ định vị.');
+            }
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+}

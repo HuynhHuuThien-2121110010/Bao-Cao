@@ -1,0 +1,109 @@
+﻿@model IEnumerable<MyClass.Models.ProductStoreInfo>
+
+@{
+    ViewBag.Title = "Tất cả sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header{
+
+    <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
+    @*<style>
+        .input-file {
+            background-image: url('/Content/excel-icon.png'); /* Đường dẫn đến hình ảnh Excel */
+            background-repeat: no - repeat;
+            background-position: right center;
+            padding-right: 25px; /* Để tạo khoảng trống bên phải của input cho hình ảnh */
+        }
+    </style>*@
+}
+@section footer{
+
+    <script src="~/Public/js/cdn.datatables.net_1.13.6_js_jquery.dataTables.min.js"></script>
+    <script>
+        
+        let table = new DataTable('#myTable');
+    </script>
+}
+@using (Html.BeginForm("Import", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content my-3">
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong class="text-danger text-uppercase">Tất cả sản phẩm</strong>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <label>Chọn file</label>
+                            <input type="file" name="file" class="input-file" />
+                            <input type="submit" value="Nhập" />
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2">
+                    @Html.Partial("Message")
+                    @if (!string.IsNullOrEmpty(ViewBag.Message))
+                    {
+                        <div>@ViewBag.Message</div>
+                    }
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" id="myTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:20px;">#</th>
+                                <th class="text-center" style="width:100px;">
+                                    Hình
+                                </th>
+                                <th class="text-center">Tên sản phẩm</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center" style="width:20px;">Id</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td class="text-center">
+                                        <img src="~/Public/images/products/@item.Img" alt="tenhinh" class="img-fluid" />
+                                    </td>
+                                    <td class="text-center">@item.Name</td>
+                                    <td class="text-center">
+                                        @item.Qty
+                                    </td>
+                                    <td class="text-center">
+                                        @item.Id
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+}
+<!-- /.content-wrapper -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var msg = document.getElementById('successMessage');
+            if (msg) {
+                msg.style.display = 'none';
+            }
+        }, 3000); // 5 giây
+    }
+</script>

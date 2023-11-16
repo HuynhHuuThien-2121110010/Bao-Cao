@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CartItem>
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@{
+    var user = ViewBag.User;
+}
+@using (Html.BeginForm("DatHang", "Giohang", FormMethod.Post))
+{
+    <section class="maincontent clearfix">
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="category-title position-relative">
+                        <h2 class="text-center text-uppercase">Thanh Toán</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Mã sản phẩm</th>
+                                        <th style="width:100px;">Hình</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ double tongtien = 0;}
+                                    @foreach (var cart in Model)
+                                    {
+                                        <tr>
+                                            <td>@cart.ProductId</td>
+                                            <td><img src="~/Public/images/products/@cart.ProductImg" class="img-fluid card-img-top" alt="@cart.ProductName" /></td>
+                                            <td>@cart.ProductName</td>
+                                            <td><strong>@string.Format("{0:N0} đ", cart.ProductPrice)</strong></td>
+                                            <td>
+                                                @cart.Qty
+                                            </td>
+                                            <td>
+                                                <strong class="text-danger amount-label">@string.Format("{0:N0} đ", cart.Amount)</strong>
+                                            </td>
+                                            <td class="text-center ">
+                                                <a class="text-danger" href="@Url.Action("DeleteCart", "Giohang", new { productid = cart.ProductId })"><i class="far fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                        tongtien += cart.Amount;
+                                    }
+                                </tbody>
+                            </table>
+                            <h3>Thông Tin Khách Hàng</h3>
+                            <div class="form-group my-2">
+                                <label>Họ Tên:</label>
+                                <input name="fullname" value="@user.FullName" class="form-control" readonly />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Email:</label>
+                                <input name="email" value="@user.Email" class="form-control" readonly />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Số điện thoại:</label>
+                                <input name="phone" value="@user.Phone" class="form-control" readonly />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Địa chỉ:</label>
+                                <input name="address" value="@user.Address" class="form-control" readonly />
+                            </div>
+                            <h3>Thông Tin Người Nhận</h3>
+                            <div class="form-group my-2">
+                                <label>Họ Tên Người Nhận:</label>
+                                <input name="deliveryName" class="form-control" />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Giới tính:</label>
+                                <input name="deliveryGender" class="form-control" />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Email:</label>
+                                <input name="deliveryEmail" class="form-control" />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Số Điện Thoại:</label>
+                                <input name="deliveryPhone" class="form-control" />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Địa chỉ:</label>
+                                <input name="deliveryAddress" class="form-control" />
+                            </div>
+                            <div class="form-group my-2">
+                                <label>Ghi chú:</label>
+                                <textarea name="note" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>Thông Tin</h3>
+                            <p>Tổng Tiền: @string.Format("{0:N0} đ", tongtien)</p>
+                            <p>Khuyến mãi: </p>
+                            <p>....</p>
+                            <button type="submit" class="btn btn-outline-success">Đặt Hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

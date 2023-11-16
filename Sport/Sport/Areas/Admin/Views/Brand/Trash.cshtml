@@ -1,0 +1,93 @@
+﻿@model IEnumerable<MyClass.Models.Brand>
+
+@{
+    ViewBag.Title = "Thùng rác thương hiệu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header{
+
+    <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+
+    <script src="~/Public/js/cdn.datatables.net_1.13.6_js_jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+}
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content my-3">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong class="text-danger text-uppercase">Thùng rác sản phẩm</strong>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="@Url.Action("Index","Brand")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-2">
+                @Html.Partial("Message")
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:20px;">#</th>
+                            <th class="text-center">Tên Thương Hiệu</th>
+                            <th class="text-center">Hình</th>
+                            <th class="text-center">Ngày Tạo</th>
+                            <th class="text-center" style="width:180px;">Chức năng</th>
+                            <th class="text-center" style="width:20px;">Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center"></td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-center"><img src="~/Public/images/brand/@item.Img" class="img-fluid" style="width:100px;" alt="img" />
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Created_At)</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("ReTrash","Brand", new { id = item.Id })" class="btn btn-sm btn-info"><i class="fas fa-undo"></i></a>
+                                    <a href="@Url.Action("Delete","Brand", new { id = item.Id })" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    @item.Id
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var msg = document.getElementById('successMessage');
+            if (msg) {
+                msg.style.display = 'none';
+            }
+        }, 3000); // 5 giây
+    }
+</script>

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Public/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/Public/css/LayoutSite.css" rel="stylesheet" />
+    <link href="~/Public/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link href="~/Public/css/style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" href="~/Public/icon/dropbox_logo_icon_257026.ico" />
+   @RenderSection("header", required: false)
+</head>
+<body>
+    <section class="herder clearfix">
+        <div class="container py-2 bg-cyan">
+            <div class="row">
+                <div class="col-md-6">
+                    Chào mừng bạn đến với shop thể thao
+                </div>
+                <div class="col-md-6 text-end">
+                    <ul>
+                        @if (Session["UserCustomer"].Equals(""))
+                        {
+                            <li class="nav-item bg-cyan">
+                                <a class="nav-link py-0 text-light" href="~/dang-ky"><i class="fas fa-user"></i>Đăng ký</a>
+                            </li>
+                            <li class="nav-item bg-cyan">
+                                <a class="nav-link py-0 text-light" href="~/dang-nhap"><i class="fas fa-user"></i>Đăng Nhập</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item bg-cyan">
+                                <a class="nav-link py-0 text-light" href="~/dang-xuat"><i class="fas fa-user"></i>Đăng Xuất</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container py-2">
+            <div class="row">
+                <div class="col-md-2 logo">
+                    <img src="~/Public/images/logo/logo.png" alt="Logo" class="img-fluid" />
+                </div>
+                <div class="col-md-6 py-2">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-2 my-3 text-center">
+                    @{
+                        int qty = 0;
+                        if (!System.Web.HttpContext.Current.Session["MyCart"].Equals(""))
+                        {
+                            List<CartItem> listcart = (List<CartItem>)System.Web.HttpContext.Current.Session["MyCart"];
+                            qty = listcart.Count();
+                        }
+                    }
+                    <a href="@Url.Action("Index", "gio-hang")" class="btn btn-outline-success position-relative">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-bottom-pill bg-danger">
+                            <span id="showqty">@qty</span>
+                            <span class="visually-hidden"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section><section class="mainmenu clearfix bg-main">
+        @Html.Action("MainMenu", "Module")
+    </section>
+    <section class="maincontent clearfix">
+        @RenderBody()
+    </section>
+    <section class="footer clearfix bg-footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4 class="text-light">CHÚNG TÔI LÀ AI ?</h4>
+                </div>
+                <div class="col-md-3">
+                    @Html.Action("FootterMenu", "Module")
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-light">KHU BÁN HÀNG</h4>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="text-light">HỖ TRỢ CHUNG</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="copyright clearfix bg-footer py-2">
+        <div class="container">
+            <div class="row border-top border-light">
+                <div class="col-md-6 text-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">Bản quyền thuộc về Ego Creative Cung cấp bởi Sapo</div>
+                            <div class="col-md-6">
+                                @using (Html.BeginForm("SendEmail", "Site", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                                {
+                                    <div class="form-group my-2">
+                                        <label>Nhập Email</label>
+                                        <input name="email" type="email" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <label>Tiêu đề</label>
+                                        <input name="tieude" type="text" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <label>Nội dung</label>
+                                        <input name="noidung" type="text" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <button type="submit" class="btn btn-outline-success">Gửi</button>
+                                    </div>
+                                    <div class="form-group my-2">
+                                        @Html.Raw(ViewBag.Error)
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 my-4 text-right">
+                    @Html.Action("Map", "Site")
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @RenderSection("footer", required: false)
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<MyClass.Models.Category>
+<link href="~/Scripts/bootstrap.bundle.min.js" />
+@{
+    ViewBag.Title = "Thùng rác danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header{
+
+    <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+
+    <script src="~/Public/js/cdn.datatables.net_1.13.6_js_jquery.dataTables.min.js"></script>
+    <script>
+    let table = new DataTable('#myTable');
+    </script>
+}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content my-3">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong class="text-danger text-uppercase">Thùng rác danh mục</strong>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="@Url.Action("Index","Category")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-2">
+                @Html.Partial("Message")
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:20px;">#</th>
+                            <th>Tên danh mục</th>
+                            <th>
+                                Slug
+                            </th>
+                            <th>
+                                Ngày Tạo
+                            </th>
+                            <th class="text-center" style="width:180px;">Chức năng</thclass="text-center">
+                            <th class="text-center" style="width:20px;">
+                                Id
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Slug)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created_At)
+                                </td>
+
+                                <td class="text-center">
+                                    @*@if (item.Status == 1)
+                                        {
+                                            <a href="@Url.Action("Status","Category", new { id = item.Id })" class="btn btn-sm btn-success"><i class="fas fa-toggle-on"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Status","Category", new { id = item.Id })" class="btn btn-sm btn-danger"><i class="fas fa-toggle-off"></i></a>
+                                        }*@
+                                    <a href="@Url.Action("ReTrash","Category", new { id = item.Id })" class="btn btn-sm btn-info"><i class="fas fa-undo"></i></a>
+                                    <a href="@Url.Action("Delete","Category", new { id = item.Id })" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                    @*@Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Chi tiết", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id })*@
+                                </td>
+
+                                <td>
+                                    @item.Id
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var msg = document.getElementById('successMessage');
+            if (msg) {
+                msg.style.display = 'none';
+            }
+        }, 3000); // 5 giây
+    }
+</script>
+

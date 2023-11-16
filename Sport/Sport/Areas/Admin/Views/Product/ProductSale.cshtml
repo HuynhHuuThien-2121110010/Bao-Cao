@@ -1,0 +1,95 @@
+﻿@model MyClass.Models.Product
+
+@{
+    ViewBag.Title = "Thêm khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("ProductSale", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Created_At)
+    @Html.HiddenFor(model => model.Img)
+    @Html.HiddenFor(model => model.Created_By)
+    @Html.HiddenFor(model => model.Description)
+    @Html.HiddenFor(model => model.Detail)
+    @Html.HiddenFor(model => model.BrandId)
+    @Html.HiddenFor(model => model.CatId)
+    @Html.HiddenFor(model => model.Name)
+    @Html.HiddenFor(model => model.Slug)
+    @Html.HiddenFor(model => model.Status)
+    @Html.HiddenFor(model => model.Sort_Order)
+    @Html.HiddenFor(model => model.Price)
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content my-3">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6"><strong class="text-danger text-uppercase">Cập nhật danh mục</strong></div>
+                        <div class="col-md-6 text-right">
+                            <a href="@Url.Action("Index","Product")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nhập khuyến mãi</label>
+                            <section class="maincontent clearfix">
+                                <div class="container my-3">
+                                    <div class="form-group my-2">
+                                        <label>Ngày bắt đầu</label>
+                                        <input name="datestart" type="datetime-local" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <label>Ngày kết thúc</label>
+                                        <input name="dateend" type="datetime-local" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        <label>Giá khuyến mãi</label>
+                                        <input name="priceSale" type="number" class="form-control" />
+                                    </div>
+                                    <div class="form-group my-2">
+                                        @Html.Raw(ViewBag.Error)
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Thông tin sản phẩm</label>
+                            <table class="table table-bordered table-striped" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 40%x;">Tên sản phẩm</th>
+                                        <th class="text-center" style="width: 40%;">Hình</th>
+                                        <th class="text-center" style="width:20%;">Giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Model.Name</td>
+                                        <td>
+                                            <img src="~/Public/images/products/@Model.Img" class="img-fluid card-img-top" alt="...">
+                                        </td>
+                                        <td>@Model.Price</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success" name="edit"><i class="fas fa-save"></i> Lưu khuyến mãi</button>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+}
+

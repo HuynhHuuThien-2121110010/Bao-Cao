@@ -1,0 +1,77 @@
+﻿﻿@model IEnumerable<MyClass.Models.Category>
+@{
+    Page.Title = "Shop thể thao";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@section header{
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic' rel='stylesheet' type='text/css'>
+    <link href="~/Public/plugins/owlcarousel/css/docs.theme.min.css" />
+    <link href="~/Public/plugins/owlcarousel/css/owl.theme.default.min.css" />
+    <link href="~/Public/plugins/owlcarousel/css/owl.carousel.min.css" />
+    <script src="~/Public/plugins/owlcarousel/assets/jquery.min.js"></script>
+    @*<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @*<script src="~/Public/plugins/owlcarousel/js/owl.carousel.js"></script>*@
+    <style>
+        .slick-prev:before {
+        }
+    </style>
+}
+@Html.Action("Slidershow", "Module")
+<section class="maincontent clearfix">
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                @foreach (var category in Model)
+                {
+                    @Html.Action("HomeProduct", "Site", new { @id = category.Id })
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@Html.Action("NewProduct", "Module")
+
+@Html.Action("ListBrand", "Module")
+<script src="~/Public/plugins/owlcarousel/assets/highlight.js"></script>
+<script src="~/Public/plugins/owlcarousel/js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js" integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $('.autoplay').slick({
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 1000,
+    });
+</script>
+<script>
+    $('.center').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(".qty-input").on("input", function () {
+            var qty = parseInt($(this).val());
+            var productPrice = parseFloat($(this).data("productprice"));
+            var cartIndex = parseInt($(this).data("cartindex"));
+            var amountElement = $(this).closest("tr").find(".amount-label");
+
+            var amount = qty * productPrice;
+            amountElement.text(formatCurrency(amount));
+        });
+
+        function formatCurrency(amount) {
+            var formatter = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD"
+            });
+            return formatter.format(amount);
+        }
+    });
+</script>

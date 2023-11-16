@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CartItem>
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+<section class="maincontent clearfix">
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="category-title position-relative">
+                    <h2 class="text-center text-uppercase">Giỏ hàng </h2>
+                </div>
+                @if (Model != null && Model.Count() != 0)
+                {
+                    using (Html.BeginForm("UpdateCart", "Giohang", FormMethod.Post))
+                    {
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Mã sản phẩm</th>
+                                    <th style="width:100px;">Hình</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ double tongtien = 0;}
+                                @foreach (var cart in Model)
+                                {
+                                    <tr>
+                                        <td>@cart.ProductId</td>
+                                        <td><img src="~/Public/images/products/@cart.ProductImg" class="img-fluid card-img-top" alt="@cart.ProductName" /></td>
+                                        <td>@cart.ProductName</td>
+                                        <td><strong>@string.Format("{0:N0} đ", cart.ProductPrice)</strong></td>
+                                        <td>
+                                            <input name="qty" value="@cart.Qty" type="number" min="1" data-productid="@cart.ProductId" data-productprice="@cart.ProductPrice" data-cartindex="@ViewBag.CartIndex" class="qty-input" />
+                                        </td>
+                                        <td>
+                                            <strong class="text-danger amount-label">@string.Format("{0:N0} đ", cart.Amount)</strong>
+                                        </td>
+                                        <td class="text-center ">
+                                            <a class="text-danger" href="@Url.Action("DeleteCart", "Giohang", new { productid = cart.ProductId })"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    tongtien += cart.Amount;
+                                }
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="@Url.Action("Index", "Site")" class="btn btn-sm btn-success">Tiếp tục mua hàng</a>
+                                        <input class="btn btn-sm btn-info" name="CAPNHAT" type="submit" value="Cập nhật"/>
+                                        <a href="@Url.Action("DeleteCartAll", "Giohang")" class="btn btn-sm btn-danger">Xóa đơn hàng</a>
+                                        <a href="~/thanh-toan" class="btn btn-sm btn-secondary">Thanh toán</a>
+                                    </td>
+                                    <td class="text-end">Thành tiền</td>
+                                    <td colspan="2" class="text-end"><strong>@string.Format("{0:N0} đ", tongtien)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                }
+                else
+                {
+                    <h3 class="text-center">Chưa có sản phẩm trong giỏ hàng <a href="https://localhost:44330/">Mua sắm ngay</a></h3>
+                }
+            </div>
+        </div>
+    </div>
+</section>

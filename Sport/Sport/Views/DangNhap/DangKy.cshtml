@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@using (Html.BeginForm("DangKy", "DangNhap", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <section class="maincontent clearfix">
+        <div class="container my-3">
+            <div class="form-group my-2">
+                <label>Họ và Tên</label>
+                <input name="fullname" type="text" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Số điện thoại</label>
+                <input name="phone" type="text" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Địa chỉ</label>
+                <input name="address" type="text" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Tên đăng nhập</label>
+                <input name="username" type="text" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Email:</label>
+                <input name="email" type="text" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Mật khẩu</label>
+                <input name="password" type="password" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <label>Nhập lại mật khẩu</label>
+                <input name="repassword" type="password" class="form-control" />
+            </div>
+            <div class="form-group my-2">
+                <button type="submit" class="btn btn-outline-success">Đăng ký</button>
+            </div>
+            <div class="form-group my-2">
+                @Html.Raw(ViewBag.Error)
+            </div>
+        </div>
+    </section>
+
+}
+

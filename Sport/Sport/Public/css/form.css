@@ -1,0 +1,5 @@
+﻿.custom-form {
+    width: 80%; /* Tăng chiều rộng lên 80% so với chiều rộng mặc định */
+    height: 500px; /* Cố định chiều cao là 500px */
+    margin: 0 auto;
+}

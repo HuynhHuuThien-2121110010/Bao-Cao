@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<MyClass.Models.ProductInfo>
+@using PagedList.Mvc;
+@{
+    var category = ViewBag.Category;
+}
+@{
+    ViewBag.Title = category.Name;
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+<section class="maincontent clearfix">
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <div class="sidebar">
+                    @Html.Action("ListCategory", "Module")
+                    @Html.Action("PostLastNews", "Site")
+                </div>
+
+            </div>
+            <div class="col-md-9 col-lg-9">
+                <div class="category-title position-relative">
+                    <h2 class="text-center">@category.Name</h2>
+                    <div class="row">
+                        @foreach (var product in Model)
+                        {
+                            <div class="col-md-4">
+                                <div class="center owl-carousel owl-theme">
+                                    <div class="item product-item px-2">
+                                        <div class="card" style="width:100%">
+                                            <a href="~/@product.Slug">
+                                                <img src="~/Public/images/products/@product.Img" class="img-fluid card-img-top" alt="...">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class=" text-center">
+                                                    <a href="~/@product.Slug">@product.Name</a>
+                                                </h5>
+                                                <div class="text-center">
+                                                    <strong>Thương hiệu: @product.BrandName</strong>
+                                                </div>
+                                                <h5 class="text-center">
+                                                    <strong class="text-success">@string.Format("{0:N0} đ", product.Price)</strong>
+                                                    @*<del><span class="text-danger">290.000</span></del><sup>đ</sup>*@
+                                                </h5>
+                                                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                                                    <button id="addToCartLinksss" data-product-id="@product.Id" class="btn btn-outline-info" onclick="addcart(@product.Id)">
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                    </button>
+                                                    <a href="~/@product.Slug" class="btn btn-outline-success"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", "Site", new { page }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

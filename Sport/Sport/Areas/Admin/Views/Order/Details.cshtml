@@ -1,0 +1,256 @@
+﻿@model MyClass.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header{
+
+    <link href="~/Public/css/cdn.datatables.net_1.13.6_css_jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+
+    <script src="~/Public/js/cdn.datatables.net_1.13.6_js_jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+}
+<section class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content my-3">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong class="text-danger text-uppercase">Chi tiết đơn hàng</strong>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="@Url.Action("Index","Order")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-2">
+                @Html.Partial("Message")
+            </div>
+            <div class="table table-bordered">
+                <h5>Thông tin khách hàng</h5>
+                <table class="mx-2">
+                    <tr >
+                        <td>Mã khách hàng: </td>
+                        <td>@Model.User_Id</td>
+                    </tr>
+                    <tr>
+                        <td>Tên khách hàng: </td>
+                        <td>@Html.Action("NameCustomer", "User", new { userid = Model.User_Id })</td>
+                    </tr>
+                </table>
+                <h5>Chi tiết đơn hàng</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th style="width:120px;">Hình</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Giảm giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ float tongtien = 0;}
+                        @foreach (var chitiet in ViewBag.ListDetails)
+                        {
+
+                            <tr>
+                                <td>@chitiet.Product_id</td>
+                                <td>
+                                    <img src="~/Public/images/products/@Html.Action("NameImg", "Product", new { productid = chitiet.Product_id })" alt="tenhinh" class="img-fluid" />
+                                </td>
+                                <td>
+
+                                    @Html.Action("NameProduct", "Product", new { productid = chitiet.Product_id })
+                                </td>
+                                <td>@chitiet.Price</td>
+                                <td>@chitiet.Discount</td>
+                                <td>@chitiet.Qty</td>
+                                <td>@chitiet.Amount</td>
+                            </tr>
+                            tongtien += chitiet.Amount;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5">
+                                @if (Model.Status != 0)
+                                {
+                                    if (Model.Status == 1)
+                                    {
+                                    <a href="@Url.Action("Huy", "Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                        Hủy
+                                    </a>
+                                    <a href="@Url.Action("XacNhan", "Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                        Xác nhận
+                                    </a>
+                                    <a href="@Url.Action("DangVanChuyen", "Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                        Đang vận chuyển
+                                    </a>
+                                    <a href="@Url.Action("DaGiao", "Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                        Đã giao
+                                    </a>
+                                    }
+                                    if (Model.Status == 2)
+                                    {
+                                        <a href="@Url.Action("Huy","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Hủy
+                                        </a>
+                                        <a href="@Url.Action("XacNhan","Order", new { id = Model.Id })" class="btn btn-sm btn-success">
+                                            Xác nhận
+                                        </a>
+                                        <a href="@Url.Action("DangVanChuyen","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Đang vận chuyển
+                                        </a>
+                                        <a href="@Url.Action("DaGiao","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Đã giao
+                                        </a>
+                                    }
+                                    if (Model.Status == 3)
+                                    {
+                                        <a href="@Url.Action("Huy","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Hủy
+                                        </a>
+                                        <a href="@Url.Action("XacNhan","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Xác nhận
+                                        </a>
+                                        <a href="@Url.Action("DangVanChuyen","Order", new { id = Model.Id })" class="btn btn-sm btn-success">
+                                            Đang vận chuyển
+                                        </a>
+                                        <a href="@Url.Action("DaGiao","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Đã giao
+                                        </a>
+                                    }
+                                    if (Model.Status == 4)
+                                    {
+                                        <a href="@Url.Action("Huy","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Hủy
+                                        </a>
+                                        <a href="@Url.Action("XacNhan","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Xác nhận
+                                        </a>
+                                        <a href="@Url.Action("DangVanChuyen","Order", new { id = Model.Id })" class="btn btn-sm btn-secondary">
+                                            Đang vận chuyển
+                                        </a>
+                                        <a href="@Url.Action("DaGiao","Order", new { id = Model.Id })" class="btn btn-sm btn-success">
+                                            Đã giao
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                            </th>
+                            <th>Tổng tiền</th>
+                            <th>@tongtien</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+@*<div>
+        <h4>Order</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DeliveryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DeliveryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DeliveryEmail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DeliveryEmail)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DeliveryPhone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DeliveryPhone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DeliveryAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DeliveryAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Created_By)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Created_By)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Created_At)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Created_At)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Updated_By)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Updated_By)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Updated_At)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Updated_At)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

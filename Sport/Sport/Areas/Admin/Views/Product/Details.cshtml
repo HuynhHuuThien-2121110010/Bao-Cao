@@ -1,0 +1,224 @@
+﻿@model MyClass.Models.Product
+
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content my-3">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6"><strong class="text-danger text-uppercase">Chi tiết Danh Mục</strong></div>
+                        <div class="col-md-6 text-right">
+                            <a href="@Url.Action("Edit","Product", new { id = Model.Id })" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Sửa</a>
+                            @*@Html.ActionLink("Sửa", "Edit", new { id = Model.Id }) |*@
+                            <a href="@Url.Action("Index","Product")" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i> Quay về</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class=" table table-bordered">
+                        <tr>
+                            <th style="width:120px">Tên trường</th>
+                            <td>Nội dung</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.CatId)</td>
+                            <td>@Html.DisplayFor(model => model.CatId)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.BrandId)</td>
+                            <td>@Html.DisplayFor(model => model.BrandId)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Name)</td>
+                            <td>@Html.DisplayFor(model => model.Name)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Slug)</td>
+                            <td>@Html.DisplayFor(model => model.Slug)</td>
+                        </tr>
+
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Description)</td>
+                            <td>@Html.DisplayFor(model => model.Description)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Detail)</td>
+                            <td>@Html.DisplayFor(model => model.Detail)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Price)</td>
+                            <td>@Html.DisplayFor(model => model.Price)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Created_By)</td>
+                            <td>@Html.DisplayFor(model => model.Created_By)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Created_At)</td>
+                            <td>@Html.DisplayFor(model => model.Created_At)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Updated_By)</td>
+                            <td>@Html.DisplayFor(model => model.Updated_By)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Updated_At)</td>
+                            <td>@Html.DisplayFor(model => model.Updated_At)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Status)</td>
+                            <td>@Html.DisplayFor(model => model.Status)</td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+
+@*<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CatId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Slug)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Slug)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaKey)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaKey)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_By)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_By)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_At)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_At)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated_By)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updated_By)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated_At)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updated_At)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")*@
+</p>

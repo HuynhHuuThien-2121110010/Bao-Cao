@@ -1,0 +1,14 @@
+﻿@model IEnumerable<MyClass.Models.Brand>
+
+<section id="demos">
+    <h3 class="text-center">Các thương hiệu</h3>
+        <div class="autoplay owl-theme text-center" >
+            @foreach (var brand in Model)
+            {
+                <div class="item p-2">
+                    <img src="~/Public/images/brand/@brand.Img" class="img-fluid" alt="@brand.Img" />
+                </div>
+            }
+            
+        </div>
+</section>
